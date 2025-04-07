@@ -1,0 +1,43 @@
+# .github/workflows/main.yml
+name: Daily LeetCode Start
+
+on:
+  schedule:
+    # Runs at 05:00 UTC every day (adjust as needed)
+    # See https://crontab.guru/ for cron syntax help
+    - cron: '0 5 * * *'
+  workflow_dispatch: # Allows manual triggering from the Actions tab
+
+permissions:
+  contents: write # Grants permission to checkout code and push commits
+
+jobs:
+  run_daily_script:
+    runs-on: ubuntu-latest # Use a standard Linux runner
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 # Checks out your code
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          # Choose a Python version supported by GitHub Actions
+          # Use the version your code is compatible with
+          python-version: '3.11' 
+          cache: 'pip' # Cache dependencies to speed up subsequent runs
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Run the start_day script
+        run: python start_day.py
+        env:
+           # If your script needs any environment variables, define them here
+           # EXAMPLE_VAR: ${{ secrets.EXAMPLE_SECRET }} # Example using secrets
+           PYTHONIOENCODING: utf-8 # Ensure UTF-8 for output
