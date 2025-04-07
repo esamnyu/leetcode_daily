@@ -24,16 +24,16 @@ jobs:
         with:
           # Choose a Python version supported by GitHub Actions
           # Use the version your code is compatible with
-          python-version: '3.11' 
+          python-version: '3.11'
           cache: 'pip' # Cache dependencies to speed up subsequent runs
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Configure Git
+      - name: Configure Git # <-- Updated section
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config --global user.name 'esamnyu'
+          git config --global user.email 'es5888@nyu.edu'
 
       - name: Run the start_day script
         run: python start_day.py
